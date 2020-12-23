@@ -1,0 +1,13 @@
+name: 'WhaleScale'
+description: 'Measures the change in size of a Docker image'
+author: 'Vivian Brown'
+inputs:
+  defaultTag:
+    required: true
+    description: 'Default image tag for size comparison'
+  token:
+    required: true
+    description: 'Github API token'
+runs:
+  using: 'node12'
+  main: 'index.js'
