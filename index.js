@@ -44,13 +44,12 @@ async function getNewSize() {
 async function createCheck(title, summary) {
   const token = core.getInput('token')
   const octokit = github.getOctokit(token)
-
   await octokit.checks.create(
     {
-      repo: core.github.repo,
-      name: 'Image size change',
-      head_sha: core.github.head_sha,
-      conclusion: neutral,
+      ...github.context.repo,
+      name: 'Image',
+      head_sha: github.context.sha,
+      conclusion: 'neutral',
       output: {
         title: title,
         summary: summary
@@ -60,4 +59,3 @@ async function createCheck(title, summary) {
 }
 
 run(core.getInput('defaultTag')).then((val) => console.log(val))
-// run("alpine:3.11").then((val) => console.log(val))
