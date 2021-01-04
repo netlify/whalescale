@@ -16,11 +16,11 @@ New image size: ${newSize}`
     let title
     const change = (newSize/oldSize-1)*100
     if (change > 0) {
-      title = `Increases image size ${change.toFixed(3)}% compared to ${defaultTag}`
+      title = `⚠️ ${change.toFixed(3)}% larger than ${defaultTag}`
     } else if (change < 0) {
-      title = `Decreases image size ${change.toFixed(3)}% compared to ${defaultTag}`
+      title = `🎉 ${Math.abs(change.toFixed(3))}% smaller than ${defaultTag}`
     } else {
-      title = `No change to Docker image size`
+      title = `🐋 No change`
     }
 
     await createCheck(title, summary)
@@ -47,7 +47,7 @@ async function createCheck(title, summary) {
   await octokit.checks.create(
     {
       ...github.context.repo,
-      name: 'Image',
+      name: 'Docker image size',
       head_sha: github.context.sha,
       conclusion: 'neutral',
       output: {
