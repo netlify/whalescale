@@ -5,9 +5,9 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 
-async function run(defaultTag) {
+async function run(defaultTag, currentTag) {
   try {
-    const [oldSize, newSize] = await Promise.all([getDefaultSize(defaultTag), getNewSize()])
+    const [oldSize, newSize] = await Promise.all([getDefaultSize(defaultTag), getNewSize(currentTag)])
 
     const summary = `
 Default image size: ${oldSize}
@@ -35,9 +35,12 @@ async function getDefaultSize(tag) {
   return stdout
 }
 
-async function getNewSize() {
-  await exec('docker build . -t $GITHUB_SHA');
-  const { stdout } = await exec('docker image inspect $GITHUB_SHA --format="{{.Size}}"');
+async function getNewSize(tag) {
+  if (tag === undefined) {
+    tag = "$GITHUB_SHA"
+    await exec('docker build . -t ' + tag);
+  }
+  const { stdout } = await exec('docker image inspect ' + tag + ' --format="{{.Size}}"');
   return stdout
 }
 
@@ -58,4 +61,4 @@ async function createCheck(title, summary) {
   )
 }
 
-run(core.getInput('defaultTag')).then((val) => console.log(val))
+run(core.getInput('defaultTag'), core.getInput('currentTag')).then((val) => console.log(val))

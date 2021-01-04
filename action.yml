@@ -2,6 +2,8 @@ name: 'WhaleScale'
 description: 'Measures the change in size of a Docker image'
 author: 'Vivian Brown'
 inputs:
+  currentTag:
+    description: 'Image tag for the current build'
   defaultTag:
     required: true
     description: 'Default image tag for size comparison'
