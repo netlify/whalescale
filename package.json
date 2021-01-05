@@ -19,5 +19,8 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0"
+  },
+  "devDependencies": {
+    "@netlify/eslint-config-node": "^2.2.5"
   }
 }
