@@ -61,4 +61,4 @@ const createCheck = async function (title, summary) {
   })
 }
 
-run(core.getInput('defaultTag'), core.getInput('currentTag')).catch((error) => console.log(error))
+run(core.getInput('defaultTag'), core.getInput('currentTag'))
